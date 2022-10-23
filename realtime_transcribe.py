@@ -23,16 +23,20 @@ stream = p.open(
 # the AssemblyAI endpoint we're going to hit
 URL = "wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000"
 
+# Determines the last letter of word and adds -v for vowels and -c for consonants
 def convert_text(textstring):
     separator = ' '
     punctuation = '.,;:?!'
     vowel = 'aeiou'
+    # Splits string into individual words
     words = textstring.split(separator)
     newWords = []
-  
+
+    # If there is a word in the string
     if len(textstring)!=0:
         print(words)
         for word in words:
+            # If word has a punctuation next to it, gets the second to the last letter, and appends to new array
             if word[-1] in punctuation:
                 if word[-2] in vowel:
                     newWord = word[0:-1] + '-v' + word[-1]
@@ -41,10 +45,12 @@ def convert_text(textstring):
                     newWord = word[0:-1] + '-c' + word[-1]
                     newWords.append(newWord)
 
+            # If last letter is vowel, adds -v to the end of letter, and appends to new array
             elif word[-1] in vowel:
                 newWord = word + '-v'
                 newWords.append(newWord)
 
+            # If last letter is neither punctuation nor vowel, adds -c to the end of letter, and appends to new array
             else:
                 newWord = word + '-c'
                 newWords.append(newWord)
